@@ -238,7 +238,7 @@ function showDiffBox(sch, sbj){
 //	console.log(sch +" : "+ sbj +" : "+ oCurri +" : "+ oGrd +" : "+ oTerm);
 
 	if (sch=="MI"){
-		if (oCurri=="15" && sbj=="SO"){ // 15 사회3
+		if (oCurri=="15" && (sbj=="SO" || sbj=="EN")){
 			isShowQopt=false;
 		}
 	}else if (sch=="EL"){
