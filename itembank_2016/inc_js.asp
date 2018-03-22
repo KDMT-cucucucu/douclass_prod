@@ -56,10 +56,13 @@ function init(){
 		error:function(request,status,error){
 			$("#qListUl").empty();			
 			if (request.status==200){
-//				console.log(request.responseText);
-//				alert(request.responseText);
 				alert("에러가 발생했습니다.");
-				prevStep();
+				if (location.host.indexOf("www.douclass.com")<0){
+					console.log(request.responseText);
+//					alert(request.responseText);
+				}else{
+					prevStep();
+				}
 			}else{
 				console.log("error init()...");
 				console.log(typeof(request.responseText));

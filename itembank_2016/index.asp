@@ -596,10 +596,10 @@ function questionCnt(val){
 	frmQuestion.cntL.value=cntL.val();
 
 	var xUrl="getQuestionCnt.asp";
-
 	//	frmQuestion.target="ifrProc2";
 	//	frmQuestion.action=xUrl;
 	//	frmQuestion.submit();
+//	console.log($("#frmQuestion").serialize());
     $.ajax({
 		type: "POST",
 		url: xUrl,
