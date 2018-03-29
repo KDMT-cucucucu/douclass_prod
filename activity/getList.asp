@@ -133,7 +133,8 @@ End If
 %>
 <script>
 function goEtcDetail(selSeq, typeSeq, upSeq, geteq, seq, getsubeq, cSeq, pg){
-	if(mem_o.gotoLogin()) return;
+//	if(mem_o.gotoLogin()) return;
+<% If g_Mem.uid<>"" Then %>
 <% If chkIsCerti() Then %>
 	var rUrl="/activity/activity_detail.asp";
 	rUrl+="?selSeq="+ selSeq +"&typeSeq="+ typeSeq +"&getup_seq="+ upSeq +"&geteq="+ geteq +"&seq="+ seq +"&getsubeq="+ getsubeq +"&content_seq="+ cSeq +"&page="+ pg;
@@ -143,6 +144,9 @@ function goEtcDetail(selSeq, typeSeq, upSeq, geteq, seq, getsubeq, cSeq, pg){
 <% Else %>
 	menu_o.openAlertPop(false, "", null, 11);
 	return;
+<% End If %>
+<% Else %>
+	mem_o.gotoLogin();
 <% End If %>
 }
 function setEtcTabLi(up_seq, eq, seq, subeq){
@@ -1058,12 +1062,16 @@ End If
 <script>
 function goDnSingle(path){
 	//alert("http:://"+window.location.hostname+path);
-	if(mem_o.gotoLogin()) return;
+//	if(mem_o.gotoLogin()) return;
+<% If g_Mem.uid<>"" Then %>
 <% If chkIsCerti() Then %>
 	ifrProc.location.href="http://"+window.location.hostname+path;
 <% Else %>
 	menu_o.openAlertPop(null, null, null, 11);
 	return;
+<% End If %>
+<% Else %>
+	mem_o.gotoLogin();
 <% End If %>
 }
 </script>

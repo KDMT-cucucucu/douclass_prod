@@ -32,6 +32,7 @@ Dim cateB:cateB=util_nte(Trim(request("cateB")), "", "string")
 Dim cateS:cateS=util_nte(Trim(request("cateS")), "", "string")
 
 Dim depth4:depth4=util_nte(request("depth4"), 0, "int")
+Dim rndCode:rndCode=util_unic() ' 20180327
 
 'Response.write "typeSeq : "&typeSeq&"<br />"
 'Response.write "getup_seq : "&getup_seq&"<br />"
@@ -98,7 +99,7 @@ function goList(pg){
 		typeSeq=2
 	}
 	var xUrl="getList.asp?seq="+getseq+"&getup_seq="+getup_seq+"&geteq="+geteq+"&getsubeq="+getsubeq+"&typeSeq="+typeSeq+"&selSeq="+selSeq+"&page="+ pg;
-	xUrl+="&depth4=<%=depth4 %>";
+	xUrl+="&depth4=<%=depth4 %>&rnd=<%=rndCode %>a";
 //	console.log(xUrl);
 
 	if (document.getElementById("school")) xUrl+="&school="+ $("#school").val();
@@ -170,7 +171,7 @@ function setEtcLi(selSeq, seq, eq, type){
 	var typeSeq = <%=typeSeq %>;
 	var selSeq = <%=selSeq %>;
 	if (typeof(type)=="undefined") type="";
-	var xUrl="getLiList.asp?depth=2&up_seq=<%=selSeq %>";
+	var xUrl="getLiList.asp?depth=2&up_seq=<%=selSeq %>&rnd=<%=rndCode %>b";
 	var getData;
 	var firstLi;
 	if(seq>0){
@@ -233,7 +234,7 @@ function setEtcSubLi(selSeq, up_seq, eq, seq, subeq, page){
 	if (typeof(seq)!="number") seq=0;
 	if (typeof(page)!="number") page=1;
 	var tmp="";
-	var xUrl="getLiList.asp?depth=3&up_seq="+up_seq;
+	var xUrl="getLiList.asp?depth=3&up_seq="+up_seq +"&rnd=<%=rndCode %>c";
 	var getData;
 	if(up_seq>0){
 		$.get(xUrl, function(data) {
@@ -278,7 +279,7 @@ function setEtcSubLiType(selSeq, up_seq, eq, seq, subeq, page){
 	if (typeof(seq)!="number") seq=0;
 	if (typeof(page)!="number") page=1;
 	var tmp="";
-	var xUrl="getLiList.asp?mode=2depth&depth=2&up_seq="+up_seq;
+	var xUrl="getLiList.asp?mode=2depth&depth=2&up_seq="+up_seq +"&rnd=<%=rndCode %>d";
 	var getData;
 	if(up_seq>0){
 		$.get(xUrl, function(data) {
@@ -322,7 +323,7 @@ function getRightList(selSeq, getup_seq, geteq, seq, getsubeq, typeSeq, page){
 
 	if(seq>0 || getup_seq>0){
 		var xUrl="getList.asp?seq="+ seq+"&getup_seq="+getup_seq+"&geteq="+geteq+"&getsubeq="+getsubeq+"&typeSeq="+typeSeq+"&selSeq="+selSeq+"&page="+page;
-		xUrl+="&depth4=<%=depth4 %>";
+		xUrl+="&depth4=<%=depth4 %>&rnd=<%=rndCode %>e";
 //		console.log(xUrl);
 
 		if (document.getElementById("school")) xUrl+="&school="+ $("#school").val();
@@ -366,14 +367,15 @@ function getCateBS(param){ // 지역선택 값...
 	return param;
 }
 function etcPhotoDetail(selSeq, getup_seq, geteq, seq, getsubeq, tp_seq, img_path, caption, key_word, copyright, page){
-	if(mem_o.gotoLogin()) return;
+//	if(mem_o.gotoLogin()) return;
+<% If g_Mem.uid<>"" Then %>
 <% If chkIsCerti() Then %>
 	if(tp_seq>0){
 		if (typeof(page)!="number") page=1;
 		var xUrl="activity_detail.asp";
 		xUrl+="?selSeq="+selSeq+"&getup_seq="+getup_seq+"&geteq="+geteq+"&seq="+seq+"&getsubeq="+getsubeq+"&tp_seq="+tp_seq;
 		xUrl+="&tp_img_path="+encodeURIComponent(img_path)+"&tp_caption="+encodeURIComponent(caption)+"&key_word="+encodeURIComponent(key_word)+"&copyright="+encodeURIComponent(copyright);
-		xUrl+="&page="+page +"&depth4=<%=depth4 %>";
+		xUrl+="&page="+page +"&depth4=<%=depth4 %>&rnd=<%=rndCode %>f";
 		xUrl=getCateBS(xUrl);
 
 		location.href=xUrl;
@@ -382,14 +384,18 @@ function etcPhotoDetail(selSeq, getup_seq, geteq, seq, getsubeq, tp_seq, img_pat
 	menu_o.openAlertPop(null, null, null, 11);
 	return;
 <% End If %>
+<% Else %>
+	location.href="/sign/login.asp?retURL=%2Factivity%2F%3FselSeq%3D<%=selSeq %>"
+<% End If %>
 }
 
 function etcDetail(selSeq, content_seq, getup_seq, geteq, seq, getsubeq, typeSeq, page){
-	if(mem_o.gotoLogin()) return;
+//	if(mem_o.gotoLogin()) return;
+<% If g_Mem.uid<>"" Then %>
 <% If chkIsCerti() Then %>
 	if (typeof(pg)!="number") pg=1;
 	if(content_seq>0){
-		var xUrl="etcDetail.asp?selSeq="+selSeq+"&content_seq="+content_seq+"&getup_seq="+getup_seq+"&geteq="+geteq+"&seq="+seq+"&getsubeq="+getsubeq+"&typeSeq="+typeSeq+"&page="+page+"&depth4=<%=depth4 %>";
+		var xUrl="etcDetail.asp?selSeq="+selSeq+"&content_seq="+content_seq+"&getup_seq="+getup_seq+"&geteq="+geteq+"&seq="+seq+"&getsubeq="+getsubeq+"&typeSeq="+typeSeq+"&page="+page+"&depth4=<%=depth4 %>&rnd=<%=rndCode %>g";
 		//alert(xUrl);
 		$("#etcList").css("display","none");
 		$("#etcDetail").load(xUrl);	
@@ -397,6 +403,9 @@ function etcDetail(selSeq, content_seq, getup_seq, geteq, seq, getsubeq, typeSeq
 <% Else %>
 	menu_o.openAlertPop(null, null, null, 11);
 	return;
+<% End If %>
+<% Else %>
+	location.href="/sign/login.asp?retURL=%2Factivity%2F%3FselSeq%3D<%=selSeq %>"
 <% End If %>
 }
 function viewPath(idx, title, path, subSE_type){
@@ -418,7 +427,7 @@ if (typeof(subSE_type)!="number") subSE_type=-1;
 	return;
 <%	End If %>
 <% Else %>
-	location.href='/login.asp?retURL=<%=urlEtc %>?etc=0';
+	location.href='/sign/login.asp?retURL=<%=urlEtc %>?etc=0';
 <% End If %>
 }
 function showList(){
@@ -441,7 +450,7 @@ function videoOff(){
 	}
 }
 function goDetail(seq){
-	var xUrl="getDetailActivity.asp?seq="+seq;
+	var xUrl="getDetailActivity.asp?seq="+seq +"&rnd=<%=rndCode %>h";
 	location.href=xUrl;
 }
 function setTitle(obj){
@@ -497,7 +506,7 @@ $(document).ready(function(){
 				<div id="slnb1" class="box_smart_sub">
 					<ul id="leftListLi" class="list_accordion type02"></ul>
 				</div>
-				<!--<a href="/file/" target="_blank"><img src="../images/renew/sub/bn_library.png?time=<%=util_unic() %>" /></a>-->
+				<!--<a href="/file/" target="_blank"><img src="../images/renew/sub/bn_library.png?time=<%=rndCode %>" /></a>-->
 <!--#include virtual="/inc/inc_lnb_banner.asp"-->
 			</div>
 			<div class="sub_right" id="etcList">

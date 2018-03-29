@@ -316,7 +316,8 @@ function getRightList(selSeq, getup_seq, geteq, seq, getsubeq, typeSeq, page){
 	}
 }
 function etcPhotoDetail(selSeq, getup_seq, geteq, seq, getsubeq, tp_seq, img_path, caption, key_word, copyright, page){
-<% If g_MEM.certify="G" or g_MEM.certify="N" Then %>
+<% If g_Mem.uid<>"" Then %>
+<%	If chkIsCerti() Then %>
 	if(tp_seq>0){
 		if (typeof(page)!="number") page=1;
 		var xUrl="etcDetail.asp?selSeq="+selSeq+"&getup_seq="+getup_seq+"&geteq="+geteq+"&seq="+seq+"&getsubeq="+getsubeq+"&tp_seq="+tp_seq+"&tp_img_path="+encodeURIComponent(img_path)+"&tp_caption="+encodeURIComponent(caption)+"&key_word="+encodeURIComponent(key_word)+"&copyright="+encodeURIComponent(copyright)+"&page="+page;
@@ -324,6 +325,9 @@ function etcPhotoDetail(selSeq, getup_seq, geteq, seq, getsubeq, tp_seq, img_pat
 		$("#etcList").css("display","none");
 		$("#etcDetail").load(xUrl);
 	}
+<%	Else %>
+	menu_o.openAlertPop(null, null, null, 11);
+<%	End If %>
 <% Else %>
 	location.href="/sign/login.asp?retURL=%2Factivity%2F?selSeq=<%=selSeq %>"
 <% End If %>
@@ -339,7 +343,8 @@ function etcPhotoDetailSub(tp_seq, thumb, caption, copyright){ // 161108 관련 
 }
 
 function etcDetail(selSeq, content_seq, getup_seq, geteq, seq, getsubeq, typeSeq, page){
-<% If g_MEM.certify="G" or g_MEM.certify="N" Then %>
+<% If g_Mem.uid<>"" Then %>
+<%	If chkIsCerti() Then %>
 	if (typeof(pg)!="number") pg=1;
 	if(content_seq>0){
 		var xUrl="etcDetail.asp?selSeq="+selSeq+"&content_seq="+content_seq+"&getup_seq="+getup_seq+"&geteq="+geteq+"&seq="+seq+"&getsubeq="+getsubeq+"&typeSeq="+typeSeq+"&page="+page;
@@ -348,6 +353,9 @@ function etcDetail(selSeq, content_seq, getup_seq, geteq, seq, getsubeq, typeSeq
 		$("#etcList").css("display","none");
 		$("#etcDetail").load(xUrl);	
 	}
+<%	Else %>
+	menu_o.openAlertPop(null, null, null, 11);
+<%	End If %>
 <% Else %>
 	location.href="/sign/login.asp?retURL=%2Factivity%2F%3FselSeq%3D<%=selSeq %>"
 <% End If %>
@@ -370,7 +378,7 @@ if (typeof(subSE_type)!="number") subSE_type=-1;
 	menu_o.openAlertPop(null, null, null, 11);
 <%	End If %>
 <% Else %>
-	location.href='/login.asp?retURL=<%=urlEtc %>?etc=0';
+	location.href='/sign/login.asp?retURL=<%=urlEtc %>?etc=0';
 <% End If %>
 }
 function showList(){

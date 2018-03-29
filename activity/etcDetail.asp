@@ -173,7 +173,8 @@ function getReply(pg){
 }
 function goDnSingle(path){
 	//alert("http:://"+window.location.hostname+path);
-	if(mem_o.gotoLogin()) return;
+//	if(mem_o.gotoLogin()) return;
+<% If g_Mem.uid<>"" Then %>
 <% If chkIsCerti() Then %>
 //	ifrProc.location.href="http://"+window.location.hostname+path;
 //	var dnUrl="/down/download_file.asp?file="+ encodeURIComponent(path);
@@ -182,6 +183,9 @@ function goDnSingle(path){
 <% Else %>
 	menu_o.openAlertPop(null, null, null, 11);
 	return;
+<% End If %>
+<% Else %>
+	mem_o.gotoLogin();
 <% End If %>
 }
 $(document).ready(function(){
