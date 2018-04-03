@@ -205,7 +205,8 @@ try{
 Dim book_title, base_turn, idxChapter
 
 Dim isClass:isClass=True
-If sch="E" And (book_seq=226 Or book_seq=228 Or (book_seq>=335 And book_seq<=338)) Then ' 국어1-1, 2-1  ' 초등 국어5-1/2, 6-1/2 --> 평가자료만...
+'If sch="E" And (book_seq=226 Or book_seq=228 Or (book_seq>=335 And book_seq<=338)) Then ' 국어1-1, 2-1  ' 초등 국어5-1/2, 6-1/2 --> 평가자료만...
+If sch="E" And (book_seq=226 Or book_seq=228 Or book_seq=336 Or book_seq=338) Then ' 국어1-1, 2-1  ' 초등 국어5-2, 6-2 --> 평가자료만...
 	isClass=False 
 End If 
 
